@@ -1,20 +1,23 @@
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+
 module.exports = {
     entry: {
         app: ['./src/app.jsx']
     },
     output: {
-        path: './build',
+        path: path.resolve(__dirname, "./build"),
         filename: '[name].bundle.js'
     },
     module: {
         loaders: [
             {
                 test: /\.css$/,
-                loader: 'style!' + 'css?sourcemap'
+                loader: 'style!' + 'css?sourceMap'
             },
             {
                 test: /\.scss$/,
-                loader: 'style!' + 'css?sourcemap' + '!sass?sourcemap'
+                loader: 'style!' + 'css?sourcemap' + '!sass?sourceMap'
             },
             {
                 test: /\.(js|jsx)$/,
@@ -23,7 +26,7 @@ module.exports = {
             },
             {
                 test: /\.(json)$/,
-                exclude: 'node_modules',
+                exclude: /node_modules/,
                 loader: 'json-loader'
             },
             {
@@ -36,5 +39,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Har Viewer'
         })  
-    ]
+    ],
+    devtool: 'source-map'
 };
