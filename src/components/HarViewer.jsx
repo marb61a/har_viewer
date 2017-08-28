@@ -12,6 +12,7 @@ export default class HarViewer extends React.Component {
     constructor(){
         super();
         this.state = {
+            isColumnResizing: false,
             columnWidths: {
                 url: 500,
                 size: 100,
@@ -41,6 +42,7 @@ export default class HarViewer extends React.Component {
                                 rowHeight={30}
                                 rowGetter={this._getEntry.bind(this)}
                                 isColumnResizing={this.state.isColumnResizing}
+                                onColumnResizeEndCallback={this._onColumnResized.bind(this)}
                         >
                             <Column dataKey="url" width={this.state.columnWidths.url} isResizable={true} label="Url" />
                             <Column dataKey="size" width={this.state.columnWidths.size} isResizable={true} label="Size" />
@@ -54,6 +56,28 @@ export default class HarViewer extends React.Component {
     
     _getEntry(index){
         return this.props.entries[index];
+    }
+    
+    _onColumnResized(newColumnWidth, dataKey){
+        var columnWidths = this.state.columnWidths;
+        columnWidths[dataKey] = newColumnWidth;
+        
+        this.setState({
+            columnWidths: columnWidths,
+            isColumnResizing: false
+        });
+        
+    }
+    
+    // Table Resizing
+    componentDidMount(){
+        window.addEventListener('resize', this._onResize.bind(this));
+        this._onResize();
+        
+    }
+    
+    _onResize(){
+        
     }
 }
 
