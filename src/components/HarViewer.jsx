@@ -25,6 +25,10 @@ export default class HarViewer extends React.Component {
     }    
     
     render(){
+        var buttons = _.map(_.keys(), (x) => {
+            
+        })
+        
         return(
             <Grid>
                 <Row>
@@ -33,7 +37,33 @@ export default class HarViewer extends React.Component {
                             Har Viewer
                         </PageHeader>
                     </Col>
+                    
+                    <Col sm={3} offset={9}>
+                        <div>
+                            <label className="control-label"> 
+                                <select className="form-control" onChange={this._sampleChanged.bind(this)}>
+                                    <option value="">---</option>
+                                </select>
+                            </label>
+                        </div>
+                    </Col>
                 </Row>  
+                
+                <Row>
+                    <Col sm={12}>
+                        <p>Pie Chart</p>    
+                    </Col>
+                </Row>
+                
+                <Row> 
+                    <Col sm={8}>
+                        <ButtonGroup bsSize="small">
+                            {this._createButton('all', 'All')}
+                            {buttons}
+                        </ButtonGroup>
+                    </Col>
+                </Row>
+                
                 <Row>
                     <Col sm={12}>
                         <Table rowsCount={this.props.entries.length}
