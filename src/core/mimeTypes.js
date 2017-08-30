@@ -21,7 +21,7 @@ var types = {
         'text/css'
     ]
   },
-  json: {
+  image: {
     label: 'Image',
     color: '#866399',
     mime: [
@@ -33,5 +33,41 @@ var types = {
         'image/svg+xml'
     ]
   },
+  font: {
+    label: 'Font',
+    color: '#799958',
+    mime: [
+        'application/font-woff',
+        'application/font-ttf',
+        'application/vnd.ms-fontobject',
+        'application/font-otf'
+    ]
+  },
+  html: {
+    label: 'Document',
+    color: '#456499',
+    mime: [
+        'text/html'
+    ]
+  },
+  other: {
+      label: 'Other',
+      color: '#99999',
+      mime: []
+  }
   
 };
+
+export default{
+    types: types,
+    identify: identify
+};
+
+function identify(mimeType){
+    "use strict";
+    var fileType = _.find(_.keys(types), function(type){
+        return _.includes(types[type].mime, mimeType);
+    });
+    
+    return fileType || "other";
+}

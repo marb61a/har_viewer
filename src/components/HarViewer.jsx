@@ -4,6 +4,7 @@ import React from 'react';
 import _ from 'lodash';
 import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input} from 'react-bootstrap';
 
+import mimeTypes from '../core/mimeTypes.js';
 import FixedDataTable from 'fixed-data-table';
 const Table = FixedDataTable.Table;
 const Column = FixedDataTable.Column;
@@ -62,6 +63,10 @@ export default class HarViewer extends React.Component {
                             {buttons}
                         </ButtonGroup>
                     </Col>
+                    
+                    <Col sm={4}>
+                    
+                    </Col>
                 </Row>
                 
                 <Row>
@@ -97,6 +102,10 @@ export default class HarViewer extends React.Component {
             columnWidths: columnWidths,
             isColumnResizing: false
         });
+        
+    }
+    
+    _sampleChanged(){
         
     }
     
