@@ -25,9 +25,9 @@ export default class HarViewer extends React.Component {
     }    
     
     render(){
-        var buttons = _.map(_.keys(), (x) => {
-            
-        })
+        var buttons = _.map(_.keys(mimeTypes.types), (x) => {
+            return this._createButton(x, mimeTypes.types[x].label);    
+        });
         
         return(
             <Grid>
@@ -115,6 +115,24 @@ export default class HarViewer extends React.Component {
             tableWidth: parent.clientWidth - GutterWidth,
             tableHeight: document.body.clientHeight - parent.offsetTop - GutterWidth * 0.5
         });
+        
+    }
+    
+    // Filtering
+    _createButton(type, label){
+        var handler = this._filteredRequest.bind(this, type);
+        return(
+            <Button key={type}
+                    bsStyle="primary"
+                    active={this.state.type === type}
+                    onClick={handler}
+            > {label}
+            </Button>    
+        );
+        
+    }
+    
+    _filteredRequest(type, event){
         
     }
 }
