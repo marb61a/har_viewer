@@ -1,3 +1,5 @@
+require('fixed-data-table/dist/fixed-data-table.css');
+
 import React from 'react';
 import _ from 'lodash';
 import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input} from 'react-bootstrap';
@@ -8,13 +10,20 @@ const Table = FixedDataTable.Table;
 const Column = FixedDataTable.Column;
 const GutterWidth = 30;
 
-export default class HarViewer extends React.Component {
+export class HarEntryTable extends React.Component{
     constructor(){
         super();
         this.state = {
-            
+            isColumnResizing: false,
+            columnWidths: {
+                url: 500,
+                size: 100,
+                time: 200
+            },
+            tableWidth: 1000,
+            tableHeight: 500
         };
-    }    
+    }
     
     render(){
         var buttons = _.map(_.keys(mimeTypes.types), (x) => {
@@ -118,31 +127,9 @@ export default class HarViewer extends React.Component {
         });
         
     }
-    
-    // Filtering
-    _createButton(type, label){
-        var handler = this._filteredRequest.bind(this, type);
-        return(
-            <Button key={type}
-                    bsStyle="primary"
-                    active={this.state.type === type}
-                    onClick={handler}
-            > {label}
-            </Button>    
-        );
-        
-    }
-    
-    _filteredRequest(type, event){
-        
-    }
-    
-    _filterTextChanged(){
-        
-    }
 }
 
-HarViewer.defautProps = {
+HarEntryTable.defautProps = {
     entries: []  
     
 };

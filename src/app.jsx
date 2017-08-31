@@ -5,9 +5,7 @@ require("./app.scss");
 import React from 'react';
 import HarViewer from './components/HarViewer.jsx';
 
-<script type="text/babel">
-    React.render(
-        < HarViewer />,   
-        document.body
-    );
-</script>;
+React.render(
+    < HarViewer />,   
+    document.body
+);
