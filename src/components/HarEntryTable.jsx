@@ -10,7 +10,7 @@ const Table = FixedDataTable.Table;
 const Column = FixedDataTable.Column;
 const GutterWidth = 30;
 
-export class HarEntryTable extends React.Component{
+export default class HarEntryTable extends React.Component{
     constructor(){
         super();
         this.state = {

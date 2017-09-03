@@ -10,8 +10,21 @@ export default {
 function parse(har){
     "use strict";
     
-    var pagemap = {},
+    var pageMap = {},
         pages = [];
     
+    _.each(har.log.pages, function(p){
+        var page = new Page(p);
+        pageMap[p.id] = page;
+        pages.push(page);
+    });
     
+    _.each(har.log.entries, function(p){
+        var page = pageMap[p.pageRef],
+            entry = new Entry(p, page);
+        
+        page.entries.push(entry);
+    });
+    
+    return pages;
 }

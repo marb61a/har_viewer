@@ -13,11 +13,11 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loader: 'style!' + 'css?sourceMap'
+                loader: 'style-loader!' + 'css?sourceMap'
             },
             {
                 test: /\.scss$/,
-                loader: 'style!' + 'css?sourcemap' + '!sass?sourceMap'
+                loader: 'style-loader!' + 'css?sourcemap' + '!sass?sourceMap'
             },
             {
                 test: /\.(js|jsx)$/,
