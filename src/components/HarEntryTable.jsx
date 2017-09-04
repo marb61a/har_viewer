@@ -40,14 +40,38 @@ export default class HarEntryTable extends React.Component{
                             isColumnResizing={this.state.isColumnResizing}
                             onColumnResizeEndCallback={this._onColumnResized.bind(this)}
                         >
-                            <Column dataKey="url" width={this.state.columnWidths.url} isResizable={true} label="Url" />
-                            <Column dataKey="size" width={this.state.columnWidths.size} isResizable={true} label="Size" />
-                            <Column dataKey="time" width={this.state.columnWidths.time} isResizable={true} label="Timeime" />
+                            <Column dataKey="url" 
+                                    width={this.state.columnWidths.url} 
+                                    cellDataGetter={this._readKey.bind(this)}
+                                    isResizable={true} 
+                                    label="Url" 
+                                    flexGrow={null}/>
+                            <Column dataKey="size" 
+                                    width={this.state.columnWidths.size} 
+                                    cellDataGetter={this._readKey.bind(this)}
+                                    isResizable={true} 
+                                    label="Size" />
+                            <Column dataKey="time" 
+                                    width={this.state.columnWidths.time} 
+                                    cellDataGetter={this._readKey.bind(this)}
+                                    minWidth={200}
+                                    isResizable={true} 
+                                    label="Timeime" />
                         </Table>
                     </Col>
                 </Row> 
             </Grid>    
         );
+    }
+    
+    _readKey(key, entry){
+        var keyMap = {
+            url: 'request.url',
+            time: 'time.start',
+        };
+        
+        key = keyMap[key] || key;
+        return _.get(entry, key);
     }
     
     _getEntry(index){
@@ -85,6 +109,17 @@ export default class HarEntryTable extends React.Component{
             tableHeight: document.body.clientHeight - parent.offsetTop - GutterWidth * 0.5
         });
         
+    }
+    
+    // Table Sorting
+    _renderHeader(label, dataKey){
+        return(
+            <div className="text-primary sortable" onClick={this._columnClicked.bind(this, dataKey)}>
+                <strong>
+                    {label}
+                </strong>
+            </div>    
+        );
     }
 }
 
