@@ -1,8 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
-import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input} from 'react-bootstrap';
+import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input, Alert} from 'react-bootstrap';
+
 import mimeTypes from '../core/mimeTypes.js';
-import HarEntryTable from './HarEntryTable.jsx'
+import HarEntryTable from './HarEntryTable.jsx';
+import harParser from '../core/har-parser.js';
 
 export default class HarViewer extends React.Component {
     constructor(){
@@ -18,20 +20,49 @@ export default class HarViewer extends React.Component {
     }
     
     render(){
-        var entries = [];
+        var content = this.state.activeHar
+            ? this._renderViewer(this.state.activeHar)
+            : this._renderEmptyViewer();
         
         return(
             <div>
                 {this._renderHeader}
-                <Grid>
-                    <Row>
-                        <Col sm={12}>
-                            <HarEntryTable entries={this.state.entries} />
-                        </Col>
-                    </Row> 
-                </Grid>
+                
+                {content}
             </div>
         );
+    }
+    
+    _renderEmptyViewer(){
+        <Grid fluid>
+            <Row>
+                <Col sm={12}>
+                    <HarEntryTable entries={this.state.entries} />
+                </Col>
+            </Row>
+        </Grid> ;
+    }
+    
+    _renderViewer(har){
+        var pages = harParser.parse(har),
+            currentPage = pages[0];
+        var entries = currentPage.entries;
+        
+        return(
+            <Grid fluid>
+                <Row>
+                    <Col sm={12}>
+                        <p></p>
+                        <Alert bsStyle="warning">
+                             <strong>
+                                No Har Loaded
+                            </strong>
+                        </Alert>
+                    </Col>
+                </Row>
+            </Grid>    
+        );
+        
     }
     
     _renderHeader(){
