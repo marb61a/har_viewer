@@ -1,4 +1,5 @@
 require('fixed-data-table/dist/fixed-data-table.css');
+require('./_har-entry-table');
 
 import React from 'react';
 import _ from 'lodash';
@@ -9,6 +10,8 @@ import FixedDataTable from 'fixed-data-table';
 const Table = FixedDataTable.Table;
 const Column = FixedDataTable.Column;
 const GutterWidth = 30;
+
+var PropTypes = React.PropTypes;
 
 export default class HarEntryTable extends React.Component{
     constructor(){
@@ -42,17 +45,20 @@ export default class HarEntryTable extends React.Component{
                         >
                             <Column dataKey="url" 
                                     width={this.state.columnWidths.url} 
+                                    headerRenderer={this._renderHeader.bind(this)}
                                     cellDataGetter={this._readKey.bind(this)}
                                     isResizable={true} 
                                     label="Url" 
                                     flexGrow={null}/>
                             <Column dataKey="size" 
                                     width={this.state.columnWidths.size} 
+                                    headerRenderer={this._renderHeader.bind(this)}
                                     cellDataGetter={this._readKey.bind(this)}
                                     isResizable={true} 
                                     label="Size" />
                             <Column dataKey="time" 
                                     width={this.state.columnWidths.time} 
+                                    headerRenderer={this._renderHeader.bind(this)}
                                     cellDataGetter={this._readKey.bind(this)}
                                     minWidth={200}
                                     isResizable={true} 
@@ -113,17 +119,36 @@ export default class HarEntryTable extends React.Component{
     
     // Table Sorting
     _renderHeader(label, dataKey){
+        var sortClass = 'glyphicon glyphicon-sort-by-attributes';
+        
         return(
             <div className="text-primary sortable" onClick={this._columnClicked.bind(this, dataKey)}>
                 <strong>
                     {label}
                 </strong>
+                &nbsp;
+                <i className={sortClass}></i>
             </div>    
         );
+    }
+    
+    _columnClicked(dataKey){
+        var dir = 'asc';
+        
+        if(this.props.onColumnSort){
+            this.props.onColumnSort(dataKey, dir);
+        }    
+        
     }
 }
 
 HarEntryTable.defautProps = {
-    entries: []  
+    entries: [],   
+    onColumnSort: null
     
+};
+
+HarEntryTable.propTypes ={
+    entries: PropTypes.array,
+    onColumnSort: PropTypes.func
 };
