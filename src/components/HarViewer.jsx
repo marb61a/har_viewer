@@ -15,7 +15,8 @@ export default class HarViewer extends React.Component {
     _initialState(){
         return{
             activeHar: null,
-            entries: []
+            sortKey: null,
+            sortDirection: null
         };
     }
     
@@ -37,7 +38,12 @@ export default class HarViewer extends React.Component {
         <Grid fluid>
             <Row>
                 <Col sm={12}>
-                    <HarEntryTable entries={this.state.entries} />
+                    <p></p>
+                    <Alert bsStyle="warning">
+                         <strong>
+                            No Har Loaded
+                        </strong>
+                    </Alert>
                 </Col>
             </Row>
         </Grid> ;
@@ -46,20 +52,16 @@ export default class HarViewer extends React.Component {
     _renderViewer(har){
         var pages = harParser.parse(har),
             currentPage = pages[0];
-        var entries = currentPage.entries;
+        var entries = this._sortEntriesByKey(this.stat.sortKey, this.state.sortDirection, currentPage.entries);
         
         return(
             <Grid fluid>
                 <Row>
                     <Col sm={12}>
-                        <p></p>
-                        <Alert bsStyle="warning">
-                             <strong>
-                                No Har Loaded
-                            </strong>
-                        </Alert>
+                        <HarEntryTable entries={this.state.entries}
+                        onColumnSort={this._onColumnSort.bind(this)}/>
                     </Col>
-                </Row>
+                </Row>    
             </Grid>    
         );
         
@@ -153,6 +155,31 @@ export default class HarViewer extends React.Component {
     
     _filterTextChanged(){
         
+    }
+    
+    // Sorting
+    _onColumnSort(dataKey, direction){
+        this.setState({
+            sortKey: dataKey,
+            sortDirection: direction
+        });
+    }
+    
+    _sortEntriesByKey(sortKey, sortDirection, entries){
+        if(_.isEmpty(sortKey) | _.isEmpty(sortDirection)){
+            return entries;    
+        }
+        
+        var keyMap = {
+            url: 'request.url',
+            time: 'time.start',
+        },
+            getValue = function(entry){
+                var key = keyMap[sortKey] || sortKey;
+                return _.get(entry, key);
+            };
+        
+        var sorted = _.sortBy(entries, getValue);
     }
 }
 
