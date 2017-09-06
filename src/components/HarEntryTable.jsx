@@ -23,6 +23,11 @@ export default class HarEntryTable extends React.Component{
                 size: 100,
                 time: 200
             },
+            sortDirection: {
+                url: null,
+                size: null,
+                time: null
+            },
             tableWidth: 1000,
             tableHeight: 500
         };
@@ -119,7 +124,12 @@ export default class HarEntryTable extends React.Component{
     
     // Table Sorting
     _renderHeader(label, dataKey){
-        var sortClass = 'glyphicon glyphicon-sort-by-attributes';
+        var dir = this.state.sortDirection[dataKey],
+            classMap = {
+                asc: 'glyphicon glyphicon-sort-by-attributes',
+                desc: 'glyphicon glyphicon-sort-by-attributes-alt'
+            }
+        var sortClass = dir ? classMap[dir] : '';
         
         return(
             <div className="text-primary sortable" onClick={this._columnClicked.bind(this, dataKey)}>
@@ -133,7 +143,23 @@ export default class HarEntryTable extends React.Component{
     }
     
     _columnClicked(dataKey){
-        var dir = 'asc';
+        var sortDirections = this.state.sortDirection,
+            dir = sortDirections[dataKey];
+        
+        if(dir === null){
+            dir = 'asc';
+        } else if (dir === 'asc'){
+            dir = 'desc';
+        } else if(dir === 'desc'){
+            dir = null;
+        }
+        
+        // Reset all sorts
+        _.each(_.keys(sortDirections), function(x){
+            sortDirections[x] = null;
+        });
+        sortDirections[dataKey] = dir;
+        
         
         if(this.props.onColumnSort){
             this.props.onColumnSort(dataKey, dir);
