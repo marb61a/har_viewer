@@ -52,13 +52,21 @@ export default class HarViewer extends React.Component {
     _renderViewer(har){
         var pages = harParser.parse(har),
             currentPage = pages[0];
+<<<<<<< HEAD
         var entries = this._sortEntriesByKey(this.state.sortKey, this.state.sortDirection, currentPage.entries);
+=======
+        var entries = this._sortEntriesByKey(this.stat.sortKey, this.state.sortDirection, currentPage.entries);
+>>>>>>> d3e5760e323115a707ea4b516787023185608e56
         
         return(
             <Grid fluid>
                 <Row>
                     <Col sm={12}>
+<<<<<<< HEAD
                         <HarEntryTable entries={entries}
+=======
+                        <HarEntryTable entries={this.state.entries}
+>>>>>>> d3e5760e323115a707ea4b516787023185608e56
                         onColumnSort={this._onColumnSort.bind(this)}/>
                     </Col>
                 </Row>    
@@ -180,11 +188,14 @@ export default class HarViewer extends React.Component {
             };
         
         var sorted = _.sortBy(entries, getValue);
+<<<<<<< HEAD
         if(sortDirection === 'desc'){
             sorted.reverse();
         }
         
         return sorted;
+=======
+>>>>>>> d3e5760e323115a707ea4b516787023185608e56
     }
 }
 
