@@ -4,6 +4,7 @@ import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input, Alert} from 'rea
 
 import mimeTypes from '../core/mimeTypes.js';
 import HarEntryTable from './HarEntryTable.jsx';
+import FilterBar from './FilterBar.jsx';
 import harParser from '../core/har-parser.js';
 
 export default class HarViewer extends React.Component {
@@ -56,12 +57,13 @@ export default class HarViewer extends React.Component {
         
         return(
             <Grid fluid>
+                <FilterBar> </FilterBar>
                 <Row>
                     <Col sm={12}>
                         <HarEntryTable entries={entries}
                         onColumnSort={this._onColumnSort.bind(this)}/>
                     </Col>
-                </Row>    
+                </Row>  
             </Grid>    
         );
         
@@ -120,26 +122,7 @@ export default class HarViewer extends React.Component {
     }
     
     // Filtering
-    _createButton(type, label){
-        var handler = this._filteredRequest.bind(this, type);
-        return(
-            <Button key={type}
-                    bsStyle="primary"
-                    active={this.state.type === type}
-                    onClick={handler}
-            > {label}
-            </Button>    
-        );
-        
-    }
-    
-    _filteredRequest(type, event){
-        
-    }
-    
-    _filterTextChanged(){
-        
-    }
+
     
     // Sorting
     _onColumnSort(dataKey, direction){
@@ -164,14 +147,11 @@ export default class HarViewer extends React.Component {
             };
         
         var sorted = _.sortBy(entries, getValue);
-<<<<<<< HEAD
         if(sortDirection === 'desc'){
             sorted.reverse();
         }
         
         return sorted;
-=======
->>>>>>> d3e5760e323115a707ea4b516787023185608e56
     }
 }
 
