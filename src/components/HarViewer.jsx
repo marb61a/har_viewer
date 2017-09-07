@@ -52,21 +52,13 @@ export default class HarViewer extends React.Component {
     _renderViewer(har){
         var pages = harParser.parse(har),
             currentPage = pages[0];
-<<<<<<< HEAD
         var entries = this._sortEntriesByKey(this.state.sortKey, this.state.sortDirection, currentPage.entries);
-=======
-        var entries = this._sortEntriesByKey(this.stat.sortKey, this.state.sortDirection, currentPage.entries);
->>>>>>> d3e5760e323115a707ea4b516787023185608e56
         
         return(
             <Grid fluid>
                 <Row>
                     <Col sm={12}>
-<<<<<<< HEAD
                         <HarEntryTable entries={entries}
-=======
-                        <HarEntryTable entries={this.state.entries}
->>>>>>> d3e5760e323115a707ea4b516787023185608e56
                         onColumnSort={this._onColumnSort.bind(this)}/>
                     </Col>
                 </Row>    
@@ -76,10 +68,6 @@ export default class HarViewer extends React.Component {
     }
     
     _renderHeader(){
-        var buttons = _.map(_.keys(mimeTypes.types), (x) => {
-            return this._createButton(x, mimeTypes.types[x].label);    
-        });
-        
         var options = _.map(window.samples, (s) => {
             return (<option key={s.id} value={s.id}>
                 {s.label}
@@ -113,18 +101,6 @@ export default class HarViewer extends React.Component {
                     </Col>
                 </Row>
                 
-                <Row> 
-                    <Col sm={8}>
-                        <ButtonGroup bsSize="small">
-                            {this._createButton('all', 'All')}
-                            {buttons}
-                        </ButtonGroup>
-                    </Col>
-                    
-                    <Col sm={4}>
-                    
-                    </Col>
-                </Row>
             </Grid>        
         );
     }
