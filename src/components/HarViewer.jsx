@@ -16,6 +16,8 @@ export default class HarViewer extends React.Component {
     _initialState(){
         return{
             activeHar: null,
+            filterType: 'all',
+            filterText: null,
             sortKey: null,
             sortDirection: null
         };
@@ -53,11 +55,18 @@ export default class HarViewer extends React.Component {
     _renderViewer(har){
         var pages = harParser.parse(har),
             currentPage = pages[0];
-        var entries = this._sortEntriesByKey(this.state.sortKey, this.state.sortDirection, currentPage.entries);
+        var filter = {
+            type: this.state.filterType,
+            text: this.state.filterText
+        },
+            filteredEntries = this._filterEntries(filter, currentPage.entries),
+            entries = this._sortEntriesByKey(this.state.sortKey, this.state.sortDirection, filteredEntries);
         
         return(
             <Grid fluid>
-                <FilterBar> </FilterBar>
+                <FilterBar onChange={this._onFilterChanged.bind(this)}
+                onFilterTextChange={this.onFilterTextChanged.bind(this)}
+                > </FilterBar>
                 <Row>
                     <Col sm={12}>
                         <HarEntryTable entries={entries}
@@ -122,7 +131,26 @@ export default class HarViewer extends React.Component {
     }
     
     // Filtering
-
+    _onFilterChanged(type){
+        this.setState({filterType: type});   
+        
+    }
+    
+    _onFilterTextChanged(text){
+        this.setState({filterText: text});
+        
+    }
+    
+    _filterEntries(filter, entries){
+        return _.filter(entries, function(x){
+            var matchesType = filter.type === 'all' || filter.type === x.type,
+                matchesText = _.includes(x.request.url, filter.text);
+            
+            return matchesType && matchesText;
+        });
+        
+    }
+    
     
     // Sorting
     _onColumnSort(dataKey, direction){
