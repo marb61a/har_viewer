@@ -5,6 +5,7 @@ import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input, Alert} from 'rea
 import mimeTypes from '../core/mimeTypes.js';
 import HarEntryTable from './HarEntryTable.jsx';
 import FilterBar from './FilterBar.jsx';
+import SampleSelector from './SampleSelector.jsx';
 import harParser from '../core/har-parser.js';
 
 export default class HarViewer extends React.Component {
@@ -79,12 +80,6 @@ export default class HarViewer extends React.Component {
     }
     
     _renderHeader(){
-        var options = _.map(window.samples, (s) => {
-            return (<option key={s.id} value={s.id}>
-                {s.label}
-            </option>); 
-        });
-        
         return(
              <Grid>
                 <Row>
@@ -95,14 +90,7 @@ export default class HarViewer extends React.Component {
                     </Col>
                     
                     <Col sm={3} offset={9}>
-                        <div>
-                            <label className="control-label"> 
-                                <select ref="selector" className="form-control" onChange={this._sampleChanged.bind(this)}>
-                                    <option value="">---</option>
-                                    {options}
-                                </select>
-                            </label>
-                        </div>
+                        <SampleSelector onSampleChanged={this._sampleChanged.bind(this)}> </SampleSelector>    
                     </Col>
                 </Row>  
                 
@@ -116,18 +104,12 @@ export default class HarViewer extends React.Component {
         );
     }
     
-    _sampleChanged(){
-        var selection = this.refs.selector.getDOMNode().value;
-        var har = selection 
-            ?_.find(window.samples, s=>s.id === selection).har
-            : null;
-        
+    _sampleChanged(har){
         if(har){
             this.setState({activeHar: har});    
-        } else{
+        } else {
             this.setState(this._initialState());
         }
-        
     }
     
     // Filtering
@@ -144,7 +126,7 @@ export default class HarViewer extends React.Component {
     _filterEntries(filter, entries){
         return _.filter(entries, function(x){
             var matchesType = filter.type === 'all' || filter.type === x.type,
-                matchesText = _.includes(x.request.url, filter.text);
+                matchesText = _.includes(x.request.url, filter.text || '');
             
             return matchesType && matchesText;
         });
