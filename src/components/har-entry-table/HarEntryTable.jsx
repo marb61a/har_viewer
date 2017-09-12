@@ -63,6 +63,7 @@ export default class HarEntryTable extends React.Component{
                             <Column dataKey="time" 
                                     width={this.state.columnWidths.time} 
                                     headerRenderer={this._renderHeader.bind(this)}
+                                    cellRenderer={this._renderTimeColumn.bind(this)}
                                     cellDataGetter={this._readKey.bind(this)}
                                     minWidth={200}
                                     isResizable={true} 
@@ -97,6 +98,37 @@ export default class HarEntryTable extends React.Component{
             isColumnResizing: false
         });
         
+    }
+    
+    // Custom Cell Rendering
+    _renderTimeColumn(cellData, cellDataKey, rowData, rowIndex, columnData, width){
+        var start = rowData.time.start,
+            total = rowData.time.total,
+            pgTimings = this.props.page.pageTimings,
+            scale = this._prepareScale(this.props.entries, this.props.page); 
+            
+        return(
+            <TimeBar scale={scale}
+                    start={start}
+                    total={total}
+                    timings={rowData.time.details}
+                    domContentLoad={pgTimings.onContentLoad}
+                    pageLoad={pgTimings.onLoad}
+            />    
+        );
+    }
+    
+    _prepareScale(entries, page){
+        var startTime = 0,
+            lastEntry = _.last(entries),
+            endTime = lastEntry.time.start + lastEntry.time.total,
+            maxTime = Math.max(endTime, page.pgTimings.onLoad);
+        
+        var scale = d3.scale.linear()
+            .domain([startTime, Math.ceil(maxTime)])
+            .range([0, 100]);
+        
+        return scale;
     }
     
     _sampleChanged(){
