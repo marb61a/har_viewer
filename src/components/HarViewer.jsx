@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input, Alert} from 'react-bootstrap';
 
 import mimeTypes from '../core/mimeTypes.js';
-import HarEntryTable from './HarEntryTable.jsx';
+import HarEntryTable from './har-entry-table/HarEntryTable.jsx';
 import FilterBar from './FilterBar.jsx';
 import SampleSelector from './SampleSelector.jsx';
 import harParser from '../core/har-parser.js';

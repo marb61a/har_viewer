@@ -3,10 +3,9 @@ require('./_har-entry-table');
 
 import React from 'react';
 import _ from 'lodash';
-import {Grid, Row, Col, PageHeader, Button, ButtonGroup, Input} from 'react-bootstrap';
-
-import mimeTypes from '../core/mimeTypes.js';
 import FixedDataTable from 'fixed-data-table';
+import TimeBar from '../timebar/TimeBar.jsx';
+
 const Table = FixedDataTable.Table;
 const Column = FixedDataTable.Column;
 const GutterWidth = 30;
@@ -128,7 +127,7 @@ export default class HarEntryTable extends React.Component{
             classMap = {
                 asc: 'glyphicon glyphicon-sort-by-attributes',
                 desc: 'glyphicon glyphicon-sort-by-attributes-alt'
-            }
+            };
         var sortClass = dir ? classMap[dir] : '';
         
         return(
