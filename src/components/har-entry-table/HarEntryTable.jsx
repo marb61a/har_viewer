@@ -200,12 +200,14 @@ export default class HarEntryTable extends React.Component{
 }
 
 HarEntryTable.defautProps = {
-    entries: [],   
+    entries: [],  
+    page: null,
     onColumnSort: null
     
 };
 
 HarEntryTable.propTypes ={
     entries: PropTypes.array,
+    page: PropTypes.object,
     onColumnSort: PropTypes.func
 };

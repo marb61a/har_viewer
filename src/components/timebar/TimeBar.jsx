@@ -10,9 +10,48 @@ export default class TimeBar extends React.Component{
     }
     
     render(){
+         var value = (v) => {
+             return `${this.props.scale(v)}%`;
+         },
+            bars = [
+                {
+                    type: 'time',
+                    style: {
+                        left: value(this.props.start),
+                        width: value(this.props.total)
+                    },
+                    className: 'timebar-mark-time'
+                },
+                {
+                    type: 'contentLoad',
+                    style: {
+                        left: value(this.props.domContentLoad),
+                        width: 1
+                    },
+                    className: 'timebar-mark-contentLoad'
+                },
+                {
+                    type: 'pageLoad',
+                    style: {
+                        left: value(this.props.pageLoad),
+                        width: 1
+                    },
+                    className: 'timebar-mark-pageLoad'
+                }
+             ],
+                label = this.props.total;
+        var barElements = _.chain(bars)
+            .map((b) => {
+                return(
+                    <div>
+                    
+                    </div>
+                );    
+            });
+        
         return(
             <span>
-                this.props.total
+                {this.props.total}
             </span>    
         );
         
