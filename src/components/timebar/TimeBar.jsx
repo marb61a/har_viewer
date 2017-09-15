@@ -1,6 +1,7 @@
 require("./timebar.scss");
 import React from 'react';
 import _ from 'lodash';
+import formatter from '../../core/formatter.js';
 
 const PropTypes = React.PropTypes;
 
@@ -40,7 +41,7 @@ export default class TimeBar extends React.Component{
                     className: 'timebar-mark-pageLoad'
                 }
              ],
-                label = this.props.total;
+                label = formatter.time(this.props.total);
         var barElements = _.chain(bars)
             .map((b) => {
                 return(
