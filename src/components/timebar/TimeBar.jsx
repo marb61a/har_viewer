@@ -1,5 +1,6 @@
 require("./timebar.scss");
 import React from 'react';
+import _ from 'lodash';
 
 const PropTypes = React.PropTypes;
 
@@ -43,16 +44,19 @@ export default class TimeBar extends React.Component{
         var barElements = _.chain(bars)
             .map((b) => {
                 return(
-                    <div>
-                    
+                    <div
+                        key={b.type} className={`timebar-mark ${b.className}`} style={b.style}>
                     </div>
-                );    
+                ).value();    
             });
         
         return(
-            <span>
-                {this.props.total}
-            </span>    
+            <div className="timebar">
+                {barElements}
+                <span className="timebar-label">
+                    {label}
+                </span>    
+            </div>
         );
         
     }
