@@ -1,7 +1,10 @@
 require("./timebar.scss");
 import React from 'react';
 import _ from 'lodash';
+import {OverlayTrigger, Popover} from 'react-bootstrap';
+
 import formatter from '../../core/formatter.js';
+import TimingDetails from './TimingDetails.jsx';
 
 const PropTypes = React.PropTypes;
 
@@ -51,13 +54,26 @@ export default class TimeBar extends React.Component{
                 ).value();    
             });
         
+        var overlay = (
+            <Popover
+                title={`Timing details, started at ${formatter.time(this.props.start)}`}>
+                <TimingDetails timings={this.props.timings}
+                    start={this.props.start}
+                    total={this.props.total}
+                />
+            </Popover>    
+        );
+        
         return(
-            <div className="timebar">
-                {barElements}
-                <span className="timebar-label">
-                    {label}
-                </span>    
-            </div>
+            <OverlayTrigger>
+                <div className="timebar">
+                    {barElements}
+                    <span className="timebar-label">
+                        {label}
+                    </span>    
+                </div>
+            </OverlayTrigger>
+           
         );
         
     }
@@ -72,7 +88,7 @@ TimeBar.defautProps = {
     pageLoad: 0
 };
 
-TimeBar,propTypes = {
+TimeBar.propTypes = {
     scale: PropTypes.func,
     start: PropTypes.number,
     total: PropTypes.number,

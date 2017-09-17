@@ -5,6 +5,7 @@ import React from 'react';
 import _ from 'lodash';
 import FixedDataTable from 'fixed-data-table';
 import TimeBar from '../timebar/TimeBar.jsx';
+import formatter from '../core/formatter';
 
 const Table = FixedDataTable.Table;
 const Column = FixedDataTable.Column;
@@ -101,6 +102,20 @@ export default class HarEntryTable extends React.Component{
     }
     
     // Custom Cell Rendering
+    _renderSizeColumn(cellData, cellDataKey, rowData, rowIndex, columnData, width){
+        return(
+            <span>
+                {formatter.filesize(cellData)}
+            </span>    
+        );    
+    }
+    
+    _renderUrlColumn(cellData, cellDataKey, rowData, rowIndex, columnData, width){
+        return(
+            <FileType url={rowData.request.url} type={rowData.type}/> 
+        );    
+    }
+    
     _renderTimeColumn(cellData, cellDataKey, rowData, rowIndex, columnData, width){
         var start = rowData.time.start,
             total = rowData.time.total,
