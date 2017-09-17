@@ -51,6 +51,7 @@ export default class HarEntryTable extends React.Component{
                             <Column dataKey="url" 
                                     width={this.state.columnWidths.url} 
                                     headerRenderer={this._renderHeader.bind(this)}
+                                    cellRenderer={this._renderUrlColumn.bind(this)}
                                     cellDataGetter={this._readKey.bind(this)}
                                     isResizable={true} 
                                     label="Url" 
@@ -58,6 +59,7 @@ export default class HarEntryTable extends React.Component{
                             <Column dataKey="size" 
                                     width={this.state.columnWidths.size} 
                                     headerRenderer={this._renderHeader.bind(this)}
+                                    cellRenderer={this._renderSizeColumn.bind(this)}
                                     cellDataGetter={this._readKey.bind(this)}
                                     isResizable={true} 
                                     label="Size" />
