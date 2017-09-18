@@ -65,7 +65,10 @@ export default class TimeBar extends React.Component{
         );
         
         return(
-            <OverlayTrigger>
+            <OverlayTrigger trigger={['trigger', 'focus']}
+                            placement="left"
+                            delay={0}
+                            overlay={overlay}>
                 <div className="timebar">
                     {barElements}
                     <span className="timebar-label">
