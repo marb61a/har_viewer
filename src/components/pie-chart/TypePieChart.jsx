@@ -1,4 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
+
+import chartBuilder from './chart-builder';
 
 export default class TypePieChart extends React.Component{
     constructor(){
@@ -22,6 +25,38 @@ export default class TypePieChart extends React.Component{
                 <g ref="container" transform={`translate(${center.x}, ${center.y})`}></g>
             </svg>    
         );
+    }
+    
+    componentDidMount(){
+        this._buildChart(this.props.entries);
+    }
+    
+    componentWillReceiveProps(props){
+        if(this.props.entries.length !== props.entries.length){
+            this._buildChart(props.entries);
+        }
+    }
+    
+    _buildChart(entries){
+        var groups = this._getEntriesByGroup(entries || []),
+            config = {
+                width: this.state.width,
+                height: this.state.height
+            };
+        
+        chartBuilder(groups, this.refs.container.getDOMNode(), config);
+    }
+    
+    _getEntriesByGroup(entries){
+        return _.chain(entries)
+        .groupBy(x => x.tyoe)
+        .map((g, key) => {
+            return {
+                type: key,
+                count: g.length
+            };
+        })
+        .value();
     }
 }
 
