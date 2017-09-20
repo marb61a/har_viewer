@@ -46,14 +46,36 @@ export default function(groups, parentNode, config){
     text.enter()
         .append("text")
         .attr('dy', '0.5em')
-        .style('font-size', '0.7em')
+        .style('font-size', '0.7em');
     
     text.transition()
         .duration(500)
         .attr("transform", (d) => {
             var angle = (d.startAngle + d.endAngle) / 2,
                 degrees = displayAngle(angle);
+            
+            if(degrees > 90){
+                degrees -= 180;
+            }
+            
+            return `translate(${labelArc.centroid(d)}) rotate(${degrees} 0 0)`;
+        })
+        .style('text-anchor', (d) => {
+             var angle = (d.startAngle + d.endAngle) / 2,
+             degrees = displayAngle(angle);
+             
+             return (degrees > 90 ? 'end' : 'start');
+        })
+        .text((d) => {
+            var label = mimeTypes.types[d.data.type].label;
+            return `${label} (${d.data.count})`;
         });
+    text.exit()
+        .transition()
+        .duration(500)
+        .style('fill-opacity', 0)
+        .remove();    
+        
 }
 
 function displayAngle(radians){
