@@ -32,4 +32,33 @@ export default function(groups, parentNode, config){
         .transition()
         .duration(500)
         .style('fill-opacity', 1);
+        
+    path.exit()
+        .transition()
+        .duration(500)
+        .style('fill-opacity', 0)
+        .remove();
+        
+    //Labels
+    var text = parent.selectAll()
+        .data(data, keyFn);
+    
+    text.enter()
+        .append("text")
+        .attr('dy', '0.5em')
+        .style('font-size', '0.7em')
+    
+    text.transition()
+        .duration(500)
+        .attr("transform", (d) => {
+            var angle = (d.startAngle + d.endAngle) / 2,
+                degrees = displayAngle(angle);
+        });
+}
+
+function displayAngle(radians){
+    var degrees = (radians * 180) / Math.PI;
+    degrees = degrees - 90;
+    
+    return degrees;
 }
