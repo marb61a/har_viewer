@@ -81,7 +81,15 @@ export default class HarViewer extends React.Component {
         
     }
     
-    _renderHeader(){
+    _renderHeader(har){
+        var pages = harParser.parse(har),
+            currentPage = pages[0];
+        var filter = {
+            type: this.state.filterType,
+            text: this.state.filterText
+        },
+            filteredEntries = this._filterEntries(filter, currentPage.entries),
+            entries = this._sortEntriesByKey(this.state.sortKey, this.state.sortDirection, filteredEntries);
         return(
              <Grid>
                 <Row>

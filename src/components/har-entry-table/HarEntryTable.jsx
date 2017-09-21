@@ -1,5 +1,5 @@
 require('fixed-data-table/dist/fixed-data-table.css');
-require('./_har-entry-table.scss');
+require('../css/har-entry-table.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
