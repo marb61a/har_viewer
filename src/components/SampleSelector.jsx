@@ -1,4 +1,5 @@
-import React from 'React';
+import React from 'react';
+import _ from 'lodash';
 
 const PropTypes = React.PropTypes;
 

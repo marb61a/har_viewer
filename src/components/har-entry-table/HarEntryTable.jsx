@@ -1,5 +1,5 @@
 require('fixed-data-table/dist/fixed-data-table.css');
-require('./_har-entry-table');
+require('./_har-entry-table.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,9 +7,9 @@ import _ from 'lodash';
 import d3 from 'd3';
 
 import FixedDataTable from 'fixed-data-table';
-import TimeBar from './timebar/TimeBar.jsx';
-import FileType from './filetype/FileType.jsx';
-import formatter from '../core/formatter';
+import TimeBar from '../timebar/TimeBar.jsx';
+import FileType from '../file-type/FileType.jsx';
+import formatter from '../../core/formatter.js';
 
 
 const Table = FixedDataTable.Table;

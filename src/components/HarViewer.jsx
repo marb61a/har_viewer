@@ -98,7 +98,17 @@ export default class HarViewer extends React.Component {
                 
                 <Row>
                     <Col sm={12}>
-                        <p>Pie Chart</p>    
+                        <TypePieChart entries={currentPage.entries}></TypePieChart>
+                    </Col>
+                </Row>
+                
+                <Row>
+                    <Col sm={12}>
+                        <HarEntryTable 
+                            entries={entries}
+                            page={currentPage}
+                            onColumnSort={this.onColumnSort.bind(this)}
+                        />
                     </Col>
                 </Row>
                 

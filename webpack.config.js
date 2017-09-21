@@ -5,6 +5,9 @@ module.exports = {
     entry: {
         app: ['./src/app.jsx']
     },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
     output: {
         path: path.resolve(__dirname, "./build"),
         filename: '[name].bundle.js'
@@ -13,11 +16,11 @@ module.exports = {
         loaders: [
           {
             test: /\.css$/,
-            loader: 'style!' + 'css?sourceMap'
+            loader: 'css-loader!' + 'css?sourceMap'
           },
           {
             test: /\.scss$/,
-            loader: 'style!' + 'css?sourceMap' + '!sass?sourceMap'
+            loader: 'style-loader!' + 'css?sourceMap' + '!sass?sourceMap'
           },
           {
             test: /\.(js|jsx)$/,

@@ -1,4 +1,4 @@
-require("./timebar.scss");
+require("./_timebar.scss");
 import React from 'react';
 import _ from 'lodash';
 import {OverlayTrigger, Popover} from 'react-bootstrap';

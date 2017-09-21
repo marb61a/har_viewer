@@ -1,4 +1,4 @@
-import mimeTypes from './mime-types.js';
+import mimeTypes from './mimeTypes.js';
 
 export default class Entry {
     constructor(harEntry, page){
